@@ -1,0 +1,199 @@
+// @mixin font-face($style-name, $file, $family, $category:"") {
+//   $filepath: "fonts/" + $family + "/" + $file;
+//   @font-face {
+//     font-family: "#{$style-name}";
+//     src: url($filepath + ".ttf") format('truetype');
+//     // src: url($filepath + ".eot");
+//     // src: url($filepath + ".eot?#iefix") format('embedded-opentype'),
+//     //      url($filepath + ".woff") format('woff'),
+//     //      url($filepath + ".ttf") format('truetype'),
+//     //      url($filepath + ".svg#" + $style-name + "") format('svg');
+//   }
+//   %#{$style-name} {
+//     font: {
+//       @if $category != "" {
+//           family: "#{$style-name}", #{ $category };
+//       }
+//       @else {
+//           family: "#{$style-name}";
+//           weight: normal;
+//       }
+//     }
+//   }
+// }
+// @include font-face('PingFang',"PingFang Medium", "PingFangSC", '');
+
+$btn-color: #3b8cff;
+$btn-border-color: #c0d9fe;
+$tr-hover-bg: #f6faff;
+$i-font-bg: #d6dce5;
+$i-font-color: #3b8cff;
+
+body {
+  font-size: 12px;
+}
+a:active,
+a:visited,
+a:focus {
+  text-decoration: none;
+}
+.btn, .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus, .btn-default.active.focus, .btn-default.active:focus, .btn-default.active:hover, .btn-default:active.focus, .btn-default:active:focus, .btn-default:active:hover, .open>.dropdown-toggle.btn-default.focus, .open>.dropdown-toggle.btn-default:focus, .open>.dropdown-toggle.btn-default:hover,.btn-default.active, .btn-default:active, .open>.dropdown-toggle.btn-default,.btn-default:hover,.btn-default.focus, .btn-default:focus,.btn.active, .btn:active {
+  color: $btn-color;
+  background-color: #fff;
+  border-color: $btn-border-color;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  outline: 0;
+}
+.btn.btn-default {
+  &:hover {
+    color: #77afff;
+    border: 1px solid #c0d9fe;
+  }
+}
+
+.table-hover > tbody > tr:hover {
+  background-color: $tr-hover-bg;
+}
+
+table > thead > tr > th {
+  color: #888;
+  font-weight: 400;
+}
+
+.table > tbody > tr > td, 
+.table > tbody > tr > th, 
+.table > tfoot > tr > td, 
+.table > tfoot > tr > th, 
+.table > thead > tr > td, 
+.table > thead > tr > th {
+  border-top: 1px solid #f2f6fd;
+}
+
+
+// table前面的选择框的样式
+.span-select {
+  i {
+    display: inline-block;
+    cursor: pointer;
+  }
+  .fa.fa-check-square {
+    margin-right: 7px;
+    color: $i-font-color;
+  }
+  .fa.fa-square-o {
+    color: $i-font-bg;
+    margin-right: 8px;
+  }
+}
+
+
+table.table {
+  table-layout: fixed;
+  thead {
+    tr {
+      th {
+        height: 36px;
+        line-height: 36px;
+        border-bottom: 1px solid #f2f6fd;
+        padding-top: 0;
+        padding-bottom: 0;
+        span {
+          @extend .span-select;
+        }
+        &:nth-child(1) {
+          width: 40%;
+        }
+        &:nth-child(2) {
+          width: 20%;
+        }
+        &:nth-child(3) {
+          width: 20%;
+        }
+        &:nth-child(4) {
+          width: 20%;
+        }
+      }
+    }
+  }
+  tbody {
+    tr {
+      &:hover {
+        span.operate-menu {
+          display: inline-block;
+        }
+      }
+      td {
+        height: 44px;
+        vertical-align: middle;
+        span.operate-menu {
+          display: none;
+          span {
+            display: inline-block;
+            padding-left: 3px;
+            padding-right: 3px;
+            &:nth-child(1) {
+              &:hover {
+                color: #4CAF50;
+              }
+            }
+            &:nth-child(2) {
+              &:hover {
+                color: #FF5722;
+              }
+            }
+          }
+          a {
+            display: inline-block;
+            padding-left: 3px;
+            padding-right: 3px;
+            color: #424e67;
+            &:hover {
+              color: $i-font-color;
+            }
+            i {
+              vertical-align: middle;
+            }
+          }
+        }
+      }
+      span {
+        vertical-align: middle;
+        &.file-name {
+          cursor: pointer;
+          &:hover {
+            color: $btn-color;
+          }
+        }
+        &.folder {
+          font-size: 24px;
+          i {
+            &.fa.fa-folder {
+              color: #ffd659;
+            }
+            &.fa.fa-file-word-o {
+              color: #5ec7fb;
+            }
+            &.fa.fa-file-video-o {
+              color: #8183f1;
+            }
+            &.fa.fa-file-audio-o {
+              color: #8183f1;
+            }
+            &.fa.fa-file-image-o {
+              color: #ff7743;
+            }
+            &.fa-link {
+              color: #65a3fb;
+            }
+          }
+        }
+        @extend .span-select;
+      }
+    }
+  }
+}
+
+
+
+
