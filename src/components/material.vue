@@ -79,7 +79,7 @@
                         v-if='activeItem && selectedItems.length === 1'>
                     <i class="fa fa-trash"></i>
                   </span>
-                  <a :href="'web/element?name=' + file.name + 'name&path=' + file.path" download
+                  <a :href="'web/element/' + file.id + '/edit'" download
                      v-if="file.type && file.type !== 'link'" title="下载">
                     <i class="fa fa-download" aria-hidden="true"></i>
                   </a>

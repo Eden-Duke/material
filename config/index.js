@@ -29,7 +29,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/web': {
-        target: 'http://192.168.1.153',
+        target: 'http://www.fgtx.shop',
         changeOrigin: true,
         pathRewrite: {
         }
