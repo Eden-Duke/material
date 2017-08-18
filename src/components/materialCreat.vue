@@ -43,16 +43,23 @@
     props: ['editItem'],
     data () {
       return {
+        copyItem: null
+      }
+    },
+    watch: {
+      'editItem' (newV, oldV) {
+        this.$reused._copy(newV, this.copyItem)
       }
     },
     methods: {
       save () {
         let self = this
-        window.axios.put(`web/element/${self.editItem.id}`, self.editItem).then(res => {
+        window.axios.put(`element/${self.editItem.id}`, self.editItem).then(res => {
           self.close()
         })
       },
       close () {
+        this.editItem = this.copyItem
         window.$('#directorycreat').modal('hide')
       }
     }

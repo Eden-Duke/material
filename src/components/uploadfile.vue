@@ -17,9 +17,9 @@
       window.$('#file-zh').fileinput({
         language: 'zh',
         uploadUrl: '/web/element',
-        allowedFileExtensions: ['jpg', 'png', 'gif', 'mp4', 'mp3'],
+        allowedFileExtensions: ['jpg', 'png', 'gif', 'jpeg', 'mov', 'avi', 'mkv', 'mp4', 'mp3'],
         overwriteInitial: false,
-        maxFileSize: 10000000000000000000000000000000,
+        maxFileSize: 10000000000000,
         maxFilesNum: 10,
         // allowedFileTypes: ['image', 'video', 'audio'],
         slugCallback: function (filename) {

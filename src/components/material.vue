@@ -79,7 +79,7 @@
                         v-if='activeItem && selectedItems.length === 1'>
                     <i class="fa fa-trash"></i>
                   </span>
-                  <a :href="'web/element/' + file.id + '/edit'" download
+                  <a :href="'element/' + file.id + '/edit'" download
                      v-if="file.type && file.type !== 'link'" title="下载">
                     <i class="fa fa-download" aria-hidden="true"></i>
                   </a>
@@ -205,7 +205,7 @@ export default {
         })
         delId = arrId.join()
       }
-      self.$reused.del(`/web/element/${delId}`, res => {
+      self.$reused.del(`element/${delId}`, res => {
         if (ismany) {
           self.files.splice(index, 1)
         } else {
@@ -228,7 +228,7 @@ export default {
       self.isselectAll = false
       self.$reused._selected(item, self, 'activeBtn')
       if (!self.$route.query.id) {
-        window.axios.get(`/web/element/${typeId}`).then(res => {
+        window.axios.get(`element/${typeId}`).then(res => {
           self.files = res.data
         })
       }
@@ -236,7 +236,7 @@ export default {
     _getMaterialQuery () {
       let self = this
       if (self.$route.query.id) {
-        window.axios.get(`/web/element/${self.$route.query.id}`).then(res => {
+        window.axios.get(`element/${self.$route.query.id}`).then(res => {
           self.fileContent = res.data
         }, err => {
           console.log(err)
