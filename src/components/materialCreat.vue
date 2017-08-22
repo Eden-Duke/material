@@ -43,7 +43,7 @@
     props: ['editItem'],
     data () {
       return {
-        copyItem: null
+        copyItem: {}
       }
     },
     watch: {
@@ -55,11 +55,11 @@
       save () {
         let self = this
         window.axios.put(`element/${self.editItem.id}`, self.editItem).then(res => {
-          self.close()
+          window.$('#directorycreat').modal('hide')
         })
       },
       close () {
-        this.editItem = this.copyItem
+        this.$emit('edited', this.copyItem)
         window.$('#directorycreat').modal('hide')
       }
     }

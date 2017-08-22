@@ -28,8 +28,8 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/web': {
-        target: 'http://192.168.1.153',
+      '/element': {
+        target: 'http://192.168.1.153/web/',
         changeOrigin: true,
         pathRewrite: {
         }

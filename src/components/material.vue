@@ -1,16 +1,16 @@
 <template>
   <div>
-  <div class="btn-group m-r-20" role="group"  aria-label="buttonGroup">
-    <button class="btn btn-default"  aria-label="Left Align" @click="_getMaterial(butn, index)"
-            v-for="(butn, index) in buttons" :class="{activeButn: butn.selected}">
-      <i :class="butn.icon"></i>
-      {{ butn.name }}
-    </button>
-  </div>
+    <div class="btn-group m-r-20" role="group"  aria-label="buttonGroup">
+      <button class="btn btn-default"  aria-label="Left Align" @click="_getMaterial(butn, index)"
+              v-for="(butn, index) in buttons" :class="{activeButn: butn.selected}">
+        <i :class="butn.icon"></i>
+        {{ butn.name }}
+      </button>
+    </div>
 
       <button class="btn btn-default btn-sm"  aria-label="Left Align" @click="webapge">
         <i class="fa fa-upload" aria-hidden="true"></i>
-        网页素材上传
+        网页素材添加
       </button>
       <router-link to="/uploadfile" target="_blank">
         <button class="btn btn-default btn-sm"  aria-label="Left Align">
@@ -79,7 +79,7 @@
                         v-if='activeItem && selectedItems.length === 1'>
                     <i class="fa fa-trash"></i>
                   </span>
-                  <a :href="'/web/element/' + file.id + '/edit'" download
+                  <a :href="'element/download/' + file.id" download
                      v-if="file.type && file.type !== 'link'" title="下载">
                     <i class="fa fa-download" aria-hidden="true"></i>
                   </a>
@@ -88,7 +88,7 @@
                     <i class="fa fa-link" aria-hidden="true"></i>
                   </a>
                 </span>
-                <material-creat :editItem='editItem'></material-creat>
+                <material-creat :editItem='editItem' v-on:edited='receptionItem'></material-creat>
               </td>
               <td class="ellipsis" :title="file.duration" v-if="file.type && file.type !== 'link'">
                 {{ file.type && file.type === 'image' ? '' : file.duration }}
@@ -104,6 +104,9 @@
           </tbody>
         </table>
       </div>
+      <div class="uploadDialog">
+        <upload-dialog></upload-dialog>
+      </div>
     </div>
   </div>
 </template>
@@ -112,10 +115,11 @@
 import Vue from 'vue'
 import materialCreat from './materialCreat.vue'
 import webpageCreat from './webpageCreat.vue'
+import uploadDialog from './uploadDialog.vue'
 
 export default {
   components: {
-    materialCreat, webpageCreat
+    materialCreat, webpageCreat, uploadDialog
   },
   data () {
     return {
@@ -159,7 +163,7 @@ export default {
       }
     },
     _downLoad (name, path) {
-      // window.location.href = `web/element?name=${name}&path=${path}`
+      // window.location.href = `webelement?name=${name}&path=${path}`
 
       var iframe = document.createElement('iframe')
       // if (!/*@cc_on!@*/0) { // 浏览器 不是IE的情况下
@@ -167,7 +171,7 @@ export default {
         console.log(iframe.readyState)
         // alert('已经加载完成！')
       }
-      iframe.src = `/web/element?name=${name}&path=${path}`
+      iframe.src = `element?name=${name}&path=${path}`
       // }
       // else {
       //   iframe.onreadystatechange = function () {
@@ -191,6 +195,10 @@ export default {
     edit (item, index) {
       window.$('#directorycreat').modal('show')
       this.editItem = item
+      this.acitveIndex = index
+    },
+    receptionItem (data) {
+      this.files[this.acitveIndex].name = data.name
     },
     del (item, index) {
       let self = this
@@ -205,7 +213,7 @@ export default {
         })
         delId = arrId.join()
       }
-      self.$reused.del(`/web/element/${delId}`, res => {
+      self.$reused.del(`element/${delId}`, res => {
         if (ismany) {
           self.files.splice(index, 1)
         } else {
@@ -228,7 +236,7 @@ export default {
       self.isselectAll = false
       self.$reused._selected(item, self, 'activeBtn')
       if (!self.$route.query.id) {
-        window.axios.get(`/web/element/${typeId}`).then(res => {
+        window.axios.get(`element/${typeId}`).then(res => {
           self.files = res.data
         })
       }
@@ -236,7 +244,7 @@ export default {
     _getMaterialQuery () {
       let self = this
       if (self.$route.query.id) {
-        window.axios.get(`/web/element/${self.$route.query.id}`).then(res => {
+        window.axios.get(`element/${self.$route.query.id}`).then(res => {
           self.fileContent = res.data
         }, err => {
           console.log(err)
@@ -351,4 +359,19 @@ export default {
   .file-name 
     display: inline-block;
     width: 60%;
+
+  .uploadDialog
+    width: 635px;
+    height: 430px;
+    border: 1px solid red;
+    position: absolute;
+    right: 30px;
+    left: auto;
+    bottom: 0px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    border: 1px solid #e2e2e2;
+    box-shadow: 0 0 10px #ccc;
+    margin-bottom: -2px;
+
 </style>

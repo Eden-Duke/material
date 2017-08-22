@@ -59,7 +59,7 @@
     methods: {
       save () {
         let self = this
-        window.axios.post(`/web/element/saveurl`, self.formData).then(res => {
+        window.axios.post(`element/saveurl`, self.formData).then(res => {
           self.$emit('webdata', res.data)
           self.close()
         })
