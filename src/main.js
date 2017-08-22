@@ -16,6 +16,9 @@ import '../static/css/bootstrap-fileinput/default.css'
 import '../static/css/bootstrap-fileinput/fileinput.css'
 import '../static/js/bootstrap-fileinput/fileinput.js'
 
+// MD5
+import '../static/js/MD5/spark-md5.min.js'
+
 window.swal = swal
 window.axios = axios
 window.Vue = Vue
