@@ -12,12 +12,11 @@
         <i class="fa fa-upload" aria-hidden="true"></i>
         网页素材添加
       </button>
-      <router-link to="/uploadfile" target="_blank">
-        <button class="btn btn-default btn-sm"  aria-label="Left Align">
-          <span class="fa fa-upload" aria-hidden="true"></span>
-          上传文件
-        </button>
-      </router-link>
+      <button class="btn btn-defalut btn-sm" @click='fileBatchs = !fileBatchs' aria-label="Left Align">
+        <span class="fa fa-upload" aria-hidden="true"></span>
+        上传文件
+      </button>
+
       <webpage-creat v-on:webdata='webdata'></webpage-creat>
 
     <div class="btn-group" role="group"  aria-label="buttonGroup">
@@ -34,8 +33,9 @@
       <!-- <button class="btn btn-default btn-sm">移动到</button> -->
     </div>
     <div class="content m-t-30 p-15">
-        <p v-if='!files.length' class="f-18 p-20 text-center req-default">
-          此分类没有数据
+        <p v-if='!files.length' class="f-18 p-20 text-center">
+          <img src="../../static/img/empty.png" height="119" width="122" alt="">
+          <span class="text-center m-t-10" style="display: block;">暂无数据</span>
         </p>
         <table v-if='files.length' class="table table-hover table-responsive table-condensed">
           <thead>
@@ -104,9 +104,8 @@
           </tbody>
         </table>
       </div>
-      <div class="uploadDialog">
-        <upload-dialog></upload-dialog>
-      </div>
+    <upload-window id='uploadWindow' :fileBatchs='fileBatchs' v-on:fileuploaded='fileuploaded'>
+    </upload-window>
     </div>
   </div>
 </template>
@@ -115,11 +114,11 @@
 import Vue from 'vue'
 import materialCreat from './materialCreat.vue'
 import webpageCreat from './webpageCreat.vue'
-import uploadDialog from './uploadDialog.vue'
+import uploadWindow from './window.vue'
 
 export default {
   components: {
-    materialCreat, webpageCreat, uploadDialog
+    materialCreat, webpageCreat, uploadWindow
   },
   data () {
     return {
@@ -134,7 +133,8 @@ export default {
       isselectAll: false,
       activeItem: null,
       editItem: {},
-      selectedItems: []
+      selectedItems: [],
+      fileBatchs: false
     }
   },
   watch: {
@@ -146,6 +146,12 @@ export default {
     this._getMaterial(this.buttons[0], 0)
   },
   methods: {
+    fileuploaded (data) {
+      this.files.push(data)
+    },
+    fileBatch () {
+      this.fileBatchs = true
+    },
     downLoad () {
       // console.log('down')
       // // let sequence = Promise.resolve()
@@ -226,6 +232,7 @@ export default {
           })
         }
         self.selectedItems = []
+        self.isselectAll = false
         self.$reused._alertSuccess()
       })
     },
@@ -315,7 +322,7 @@ export default {
 </script>
 
 
-<style lang='sass' scoped>
+<style lang='sass'>
   $btn-bg: #3b8cff
   $btn-hover-bg: #4e97ff
 
@@ -360,11 +367,9 @@ export default {
     display: inline-block;
     width: 60%;
 
-  .uploadDialog
-    width: 635px;
-    height: 430px;
+  #uploadWindow
     border: 1px solid red;
-    position: absolute;
+    position: fixed;
     right: 30px;
     left: auto;
     bottom: 0px;
@@ -373,5 +378,8 @@ export default {
     border: 1px solid #e2e2e2;
     box-shadow: 0 0 10px #ccc;
     margin-bottom: -2px;
+    background-color: white;
+    overflow: hidden;
+    padding: 3px 8px;
 
 </style>
